@@ -61,7 +61,7 @@ class _AddTodoButton extends StatelessWidget {
         context,
         controller: context.read<TodoController>(),
       ),
-      tooltip: 'Increment',
+      tooltip: 'Add Todo',
       child: const Icon(Icons.add),
     );
   }
