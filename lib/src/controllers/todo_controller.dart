@@ -32,6 +32,21 @@ class TodoController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleTodoStatus(String id) {
+    final newTodos = _todo.map(
+      (todo) => todo.id == id
+          ? todo.copyWith(
+              status: todo.status == TodoStatus.ongoing
+                  ? TodoStatus.completed
+                  : TodoStatus.ongoing)
+          : todo,
+    );
+
+    _todo = [...newTodos];
+
+    notifyListeners();
+  }
+
   void deleteTodo(String id) {
     _todo.removeWhere((todo) => todo.id == id);
 

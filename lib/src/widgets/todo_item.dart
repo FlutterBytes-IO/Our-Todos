@@ -16,8 +16,9 @@ class TodoItem extends StatelessWidget {
         onTap: () {},
         leading: Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          value: false,
-          onChanged: (_) {},
+          value: todo.status == TodoStatus.completed,
+          onChanged: (_) =>
+              context.read<TodoController>().toggleTodoStatus(todo.id),
         ),
         title: Text(todo.title),
         subtitle: Text(
