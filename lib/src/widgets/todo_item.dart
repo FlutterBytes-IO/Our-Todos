@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:our_todo/src/controllers/todo_controller.dart';
 import 'package:our_todo/src/models/todo.dart';
+import 'package:our_todo/src/widgets/update_todo_dialog.dart';
 import 'package:provider/provider.dart';
 
 class TodoItem extends StatelessWidget {
@@ -13,7 +14,11 @@ class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        onTap: () {},
+        onTap: () => UpdateTodoDialog.show(
+          context,
+          currentTodo: todo,
+          controller: context.read<TodoController>(),
+        ),
         leading: Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           value: todo.status == TodoStatus.completed,
