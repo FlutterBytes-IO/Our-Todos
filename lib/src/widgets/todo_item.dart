@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:our_todo/src/controllers/todo_controller.dart';
 import 'package:our_todo/src/models/todo.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +13,16 @@ class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () {},
+        leading: Checkbox(
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          value: false,
+          onChanged: (_) {},
+        ),
         title: Text(todo.title),
-        subtitle: Text(todo.title),
+        subtitle: Text(
+          DateFormat('hh:mma').format(todo.updatedAt).toLowerCase(),
+        ),
         trailing: IconButton(
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
