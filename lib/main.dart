@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:our_todo/src/views/home_view.dart';
 
 void main() {
   runApp(const OurTodo());
@@ -14,14 +15,5 @@ class OurTodo extends StatelessWidget {
       theme: ThemeData.dark(),
       home: const HomeView(),
     );
-  }
-}
-
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
