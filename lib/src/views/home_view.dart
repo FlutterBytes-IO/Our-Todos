@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:our_todo/src/controllers/todo_controller.dart';
+import 'package:our_todo/src/views/completed_todos_view.dart';
 import 'package:our_todo/src/views/ongoing_todos_view.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final List<WidgetBuilder> _children = [
     (_) => const OngoingTodosView(),
-    (_) => const CompletedTasksView(),
+    (_) => const CompletedTodosView(),
   ];
 
   int _currentViewIndex = 0;
@@ -48,17 +49,6 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CompletedTasksView extends StatelessWidget {
-  const CompletedTasksView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Completed'),
     );
   }
 }
