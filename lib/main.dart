@@ -11,7 +11,7 @@ class OurTodo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Our Todo',
+      title: 'Our Todos',
       theme: ThemeData.dark(),
       home: const HomeView(),
     );
