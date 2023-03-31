@@ -6,6 +6,9 @@ class TodoController extends ChangeNotifier {
 
   List<Todo> get todos => _todo;
 
+  List<Todo> get ongoingTodos =>
+      _todo.where((todo) => todo.status == TodoStatus.ongoing).toList();
+
   Todo getTodo(String id) {
     return _todo.firstWhere((todo) => todo.id == id);
   }
