@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:our_todo/src/controllers/todo_controller.dart';
+import 'package:our_todo/src/notifiers/todo_state_notifier.dart';
 import 'package:our_todo/src/models/todo.dart';
 import 'package:our_todo/src/widgets/update_todo_dialog.dart';
-import 'package:provider/provider.dart';
 
-class TodoItem extends StatelessWidget {
+class TodoItem extends ConsumerWidget {
   const TodoItem({super.key, required this.todo});
 
   final Todo todo;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       child: ListTile(
         onTap: () => UpdateTodoDialog.show(
           context,
           currentTodo: todo,
-          controller: context.read<TodoController>(),
         ),
         leading: Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           value: todo.status == TodoStatus.completed,
           onChanged: (_) =>
-              context.read<TodoController>().toggleTodoStatus(todo.id),
+              ref.read(todoNotifierProvider.notifier).toggleTodoStatus(todo.id),
         ),
         title: Text(todo.title),
         subtitle: Text(
@@ -33,7 +32,8 @@ class TodoItem extends StatelessWidget {
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
           icon: const Icon(Icons.delete),
-          onPressed: () => context.read<TodoController>().deleteTodo(todo.id),
+          onPressed: () =>
+              ref.read(todoNotifierProvider.notifier).deleteTodo(todo.id),
         ),
       ),
     );

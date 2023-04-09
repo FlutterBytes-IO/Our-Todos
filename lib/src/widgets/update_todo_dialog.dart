@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:our_todo/src/controllers/todo_controller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:our_todo/src/notifiers/todo_state_notifier.dart';
 import 'package:our_todo/src/models/todo.dart';
 import 'package:our_todo/src/widgets/custom_elevated_button.dart';
 import 'package:our_todo/src/widgets/custom_text_form_field.dart';
-import 'package:provider/provider.dart';
 import 'package:our_todo/src/core/extensions/validation_extension.dart';
 
-class UpdateTodoDialog extends StatefulWidget {
+class UpdateTodoDialog extends ConsumerStatefulWidget {
   const UpdateTodoDialog._(this.currentTodo);
 
   final Todo currentTodo;
 
   @override
-  State<UpdateTodoDialog> createState() => _UpdateTodoDialogState();
+  ConsumerState<UpdateTodoDialog> createState() => _UpdateTodoDialogState();
 
   static Future<T?> show<T>(
     BuildContext context, {
     required Todo currentTodo,
-    required TodoController controller,
   }) =>
       showDialog(
         context: context,
-        builder: (_) => ChangeNotifierProvider<TodoController>.value(
-          value: controller,
-          child: UpdateTodoDialog._(currentTodo),
-        ),
+        builder: (_) => UpdateTodoDialog._(currentTodo),
       );
 }
 
-class _UpdateTodoDialogState extends State<UpdateTodoDialog> {
+class _UpdateTodoDialogState extends ConsumerState<UpdateTodoDialog> {
   late final _formKey = GlobalKey<FormState>();
   late final _controller = TextEditingController();
 
@@ -72,7 +68,7 @@ class _UpdateTodoDialogState extends State<UpdateTodoDialog> {
               onPressed: () {
                 if (_formKey.currentState?.validate() == false) return;
 
-                context.read<TodoController>().updateTodo(
+                ref.read(todoNotifierProvider.notifier).updateTodo(
                       Todo(
                         id: widget.currentTodo.id,
                         title: _controller.text,

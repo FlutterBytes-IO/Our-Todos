@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:our_todo/src/controllers/todo_controller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:our_todo/src/views/completed_todos_view.dart';
 import 'package:our_todo/src/views/ongoing_todos_view.dart';
-import 'package:our_todo/src/widgets/add_todo_dialog.dart';
-import 'package:provider/provider.dart';
+import 'package:our_todo/src/widgets/add_todo_button.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  final List<WidgetBuilder> _children = [
-    (_) => const OngoingTodosView(),
-    (_) => const CompletedTodosView(),
+class _HomeViewState extends ConsumerState<HomeView> {
+  final _children = const <Widget>[
+    OngoingTodosView(),
+    CompletedTodosView(),
   ];
 
   int _currentViewIndex = 0;
@@ -26,43 +25,24 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TodoController(),
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Our Todo')),
-        body: _children[_currentViewIndex](context),
-        floatingActionButton: const _AddTodoButton(),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _currentViewIndex,
-          onDestinationSelected: onViewChanged,
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.pending_actions),
-              label: 'Ongoing Tasks',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.task_outlined),
-              label: 'Completed Tasks',
-            ),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Our Todo')),
+      body: _children[_currentViewIndex],
+      floatingActionButton: const AddTodoButton(),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentViewIndex,
+        onDestinationSelected: onViewChanged,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.pending_actions),
+            label: 'Ongoing Tasks',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.task_outlined),
+            label: 'Completed Tasks',
+          ),
+        ],
       ),
-    );
-  }
-}
-
-class _AddTodoButton extends StatelessWidget {
-  const _AddTodoButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => AddTodoDialog.show(
-        context,
-        controller: context.read<TodoController>(),
-      ),
-      tooltip: 'Add Todo',
-      child: const Icon(Icons.add),
     );
   }
 }

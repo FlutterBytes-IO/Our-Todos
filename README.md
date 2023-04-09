@@ -1,16 +1,16 @@
 # our_todo
 
-A new Flutter project.
+Our Todo Learning Project.
 
-## Getting Started
+## Class notes
 
-This project is a starting point for a Flutter application.
+State: int, String, List<Todo>, TodoState
+Action: void change() {}
+Triggers that a state has changed: notifyListeners, emit, setState
+Widget capable of rebuilding itself on state change: BlocBuilder, ConsumerWidget, State, Consumer
+Reactions (i.e. Navigating, Showing Snackbar): BlocListener, ref.listen
+Dependency Injection System: Provider, riverpod providers, BlocProvider
 
-A few resources to get you started if this is your first Flutter project:
+Read more: https://riverpod.dev/docs/getting_started, State Pattern
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Not touched: Ephemeral State using Riverpod, Questions

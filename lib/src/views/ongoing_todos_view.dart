@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:our_todo/src/controllers/todo_controller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:our_todo/src/notifiers/todo_state_notifier.dart';
 import 'package:our_todo/src/widgets/todo_item.dart';
-import 'package:provider/provider.dart';
 
-class OngoingTodosView extends StatelessWidget {
+class OngoingTodosView extends ConsumerWidget {
   const OngoingTodosView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final todoController = context.watch<TodoController>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoController = ref.watch(todoNotifierProvider);
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

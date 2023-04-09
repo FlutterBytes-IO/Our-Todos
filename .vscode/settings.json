@@ -1,6 +1,7 @@
 {
   "java.configuration.updateBuildConfiguration": "disabled",
   "cSpell.words": [
+    "riverpod",
     "todos",
   ]
 }

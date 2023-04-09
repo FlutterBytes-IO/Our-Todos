@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:our_todo/src/models/todo.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// To Notifier (Controller) example making use of ChangeNotifier
 class TodoController extends ChangeNotifier {
   List<Todo> _todo = [];
 
@@ -9,8 +11,6 @@ class TodoController extends ChangeNotifier {
 
   List<Todo> get completedTodos =>
       _todo.where((todo) => todo.status == TodoStatus.completed).toList();
-
-  Todo getTodo(String id) => _todo.firstWhere((todo) => todo.id == id);
 
   void addTodo(Todo todo) {
     _todo.add(todo);
@@ -49,3 +49,7 @@ class TodoController extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+final todoControllerProvider = ChangeNotifierProvider<TodoController>(
+  (ref) => TodoController(),
+);
