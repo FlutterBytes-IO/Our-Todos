@@ -1,31 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:our_todo/src/controllers/todo_controller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:our_todo/src/notifiers/todo_state_notifier.dart';
 import 'package:our_todo/src/models/todo.dart';
 import 'package:our_todo/src/widgets/custom_elevated_button.dart';
 import 'package:our_todo/src/widgets/custom_text_form_field.dart';
-import 'package:provider/provider.dart';
-import 'package:our_todo/src/core/extensions/validation_extension.dart';
 
-class AddTodoDialog extends StatefulWidget {
+class AddTodoDialog extends ConsumerStatefulWidget {
   const AddTodoDialog._();
 
   @override
-  State<AddTodoDialog> createState() => _AddTodoDialogState();
+  ConsumerState<AddTodoDialog> createState() => _AddTodoDialogState();
 
-  static Future<T?> show<T>(
-    BuildContext context, {
-    required TodoController controller,
-  }) =>
-      showDialog(
+  static Future<T?> show<T>(BuildContext context) => showDialog(
         context: context,
-        builder: (_) => ChangeNotifierProvider<TodoController>.value(
-          value: controller,
-          child: const AddTodoDialog._(),
-        ),
+        builder: (_) => const AddTodoDialog._(),
       );
 }
 
-class _AddTodoDialogState extends State<AddTodoDialog> {
+class _AddTodoDialogState extends ConsumerState<AddTodoDialog> {
   late final _formKey = GlobalKey<FormState>();
   late final _controller = TextEditingController();
 
@@ -53,7 +45,9 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
               child: CustomTextFormField(
                 controller: _controller,
                 labelText: 'Todo Title',
-                validator: context.validateTitle,
+                validator: (value) => value?.isEmpty == true
+                    ? 'Please enter a valid title'
+                    : null,
               ),
             ),
             const SizedBox(height: 16),
@@ -62,7 +56,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
               onPressed: () {
                 if (_formKey.currentState?.validate() == false) return;
 
-                context.read<TodoController>().addTodo(
+                ref.read(todoNotifierProvider.notifier).addTodo(
                       Todo(
                         id: DateTime.now().toIso8601String(),
                         title: _controller.text,
