@@ -26,4 +26,18 @@ class Todo {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Todo &&
+          runtimeType == other.runtimeType &&
+          title == other.title &&
+          id == other.id &&
+          status == other.status &&
+          updatedAt == other.updatedAt;
+
+  @override
+  int get hashCode =>
+      title.hashCode ^ id.hashCode ^ status.hashCode ^ updatedAt.hashCode;
 }
