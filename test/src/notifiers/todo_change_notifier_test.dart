@@ -32,6 +32,7 @@ void main() {
       controller.updateTodo(todo2);
 
       expect(controller.ongoingTodos, [todo2]);
+      expect(controller.ongoingTodos.first.hashCode, equals(todo2.hashCode));
     });
 
     test('toggleTodoStatus() should toggle the status of a todo', () {
