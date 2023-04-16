@@ -14,3 +14,5 @@ Our Todo Learning Project.
 Read more: https://riverpod.dev/docs/getting_started, State Pattern
 
 Not touched: Ephemeral State using Riverpod, Questions
+
+Watch the last Riverpod class by checking this link: https://tldv.io/app/meetings/6430473f56b7660013f6f4c5/
